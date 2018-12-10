@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import Layout from './components/Layout';
+import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import Home from './containers/Home';
+import Login from './containers/Login';
+import Signup from './containers/Signup';
+import NewPlay from './containers/NewPlay';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            { this.props.isAuthenticated && (
+              <Route path="/new" exact component={ NewPlay } />
+            )}
+            <Route path="/login" exact component={ Login } />
+            <Route path="/signup" exact component={ Signup } />
+            <Route path="/" exact component={ Home } />
+            <Redirect to="/" />
+          </Switch>
+        </Layout>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+      isAuthenticated: state.auth.tokenId !== null
+  }
+}
+
+export default connect(mapStateToProps)(App);

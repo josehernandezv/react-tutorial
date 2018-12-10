@@ -1,0 +1,13 @@
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+
+export const FIRESTORE_ERROR = 'FIRESTORE_ERROR';
+export const CREATE_MATCH_SUCCESS = 'CREATE_MATCH_SUCCESS';
+export const CREATE_MATCH_INIT = 'CREATE_MATCH_INIT';
+export const CREATE_MATCH_START = 'CREATE_MATCH_START';
+export const UPDATE_MATCH = 'UPDATE_MATCH';
+export const SET_MATCHES = 'SET_MATCHES';
+export const JOIN_MATCH = 'JOIN_MATCH';
+export const OPT_OUT_MATCH = 'OPT_OUT_MATCH';
