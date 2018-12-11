@@ -1,0 +1,12 @@
+.page-layout {
+    width: 100%;
+    min-height: 100vh;
+    background: url(../../assets/cork-board.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-sizing: border-box;
+    overflow: auto;
+    padding-top: 120px;
+}
