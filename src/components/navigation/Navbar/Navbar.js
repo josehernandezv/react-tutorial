@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './Navbar.module.css';
+import './Navbar.scss';
 import Logo from './Logo';
 import { NavLink, Link } from 'react-router-dom';
 import { logout } from '../../../store/actions';
@@ -8,11 +8,11 @@ import { logout } from '../../../store/actions';
 const navbar = props => {
     const { isAuthenticated } = props;
     return (
-        <div className={ styles.container }>
+        <div className="nav-bar">
             <Link to="/">
                 <Logo />
             </Link>
-            <div className={ styles.links }>
+            <div className="links">
                 <ul>
                     { isAuthenticated ? (
                         <>

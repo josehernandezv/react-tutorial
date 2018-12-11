@@ -1,5 +1,5 @@
 import React from 'react';
-import './Layout.scss';
+import './Layout.css';
 import Navbar from '../navigation/Navbar';
 import Container from '../ui/Container';
 
