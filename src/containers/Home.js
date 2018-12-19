@@ -4,7 +4,6 @@ import MatchCard from '../components/matches/MatchCard';
 class Home extends Component {
 
     state = {
-        title: 'HOME',
         matches: [
             {
                 id: 123,
@@ -24,31 +23,26 @@ class Home extends Component {
         ]
     }
 
-    removeMatchHandler = (id) => {
+    joinMatchHandler = id => {
         console.log(id)
+    }
 
-        const updatedMatches = this.state.matches.filter(item => {
-            return item.id !== id
-        });
-
-        this.setState({
-            matches: updatedMatches
-        })
+    optOutMatchHandler = id => {
+        console.log(id)
     }
 
     render() {
         return (
             <div>
-                <h1>{this.state.title}</h1>
-                { this.state.matches.map((item) => {
+                { this.state.matches.map((item, index) => {
                     return (
                         <MatchCard 
                             key={ item.id } 
                             { ...item }
                             onTitleClick={ this.removeMatchHandler }
-                            // title={ item.title }
-                            // date={ item.date }
-                            // players={ item.players }
+                            onJoinMatch={ this.joinMatchHandler } 
+                            onOptOutMatch={ this.optOutMatchHandler }
+                            declination={ index % 2 ? 'Left' : 'Right' }
                         />
                     )
                 }) }
