@@ -1,25 +1,26 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import './Navbar.scss';
 import Logo from './Logo';
 
 const navbar = () => (
     <div className="nav-bar">
-        <a href="">
+        <Link to="/">
             <Logo />
-        </a>
+        </Link>
         <div className="links">
             <ul>
                 <li>
-                    <a href="#">Nueva mejenga</a>
+                    <NavLink to="/new">Nueva mejenga</NavLink>
                 </li>
                 <li>
-                    <a href="#">Cerrar sesión</a>
+                    <NavLink to="/logout">Cerrar sesión</NavLink>
                 </li>
                 <li>
-                    <a href="#">Iniciar sesión</a>
+                    <NavLink to="/login">Iniciar sesión</NavLink>
                 </li>
                 <li>
-                    <a href="#">Registrarse</a>
+                    <NavLink to="/signup">Registrarse</NavLink>
                 </li>
             </ul>
         </div>
