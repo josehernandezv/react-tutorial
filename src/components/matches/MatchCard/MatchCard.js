@@ -4,7 +4,7 @@ import moment from 'moment';
 import Button from '../../ui/Button';
 import PropTypes from 'prop-types';
 
-const MatchCard = (props) => {
+const MatchCard = React.memo((props) => {
     const rotation = props.declination === 'Right' ? '6deg' : '-6deg';
     return (
         <div className={ styles.wrapper }>
@@ -25,7 +25,7 @@ const MatchCard = (props) => {
             </div>
         </div>
     )
-}
+});
 
 const getBgColor = () => {
     const randomNumber = Math.floor((Math.random() * 4) + 1);

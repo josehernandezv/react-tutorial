@@ -1,26 +1,61 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MatchCard from '../components/matches/MatchCard';
 
-class Home extends Component {
+class Home extends PureComponent {
 
-    state = {
-        matches: [
-            {
-                id: 123,
-                title: 'Primer mejenga',
-                date: new Date(),
-                players: [
-                    { name: 'Jose '},
-                    { name: 'Andres' },
-                ]
-            },
-            {
-                id: 456,
-                title: 'Segunda mejenga',
-                date: new Date(),
-                players: []
-            }
-        ]
+    constructor(props) {
+        super(props);
+        this.state = {
+            matches: [],
+            windowSize: window.innerWidth
+        }
+    }
+    
+    componentDidMount() {
+        fetch('https://mejenga-8c3e2.firebaseio.com/matches.json')
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                const matches = this.objectToArray(data).map(item => {
+                    return {
+                        ...item,
+                        date: new Date(item.date),
+                        players: this.objectToArray(item.players),
+                    }
+                })
+                this.setState({
+                    matches
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        
+        window.addEventListener('resize', this.logWindowSize);
+    }
+
+    componentDidUpdate() {
+        console.count('update times')
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.logWindowSize)
+    }
+
+    logWindowSize = () => {
+        console.log(window.innerWidth);
+        this.setState({ windowSize: window.innerWidth })
+    }
+
+    objectToArray = object => {
+        const array = [];
+
+        for(let key in object) {
+            array.push({ id: key, ...object[key]})
+        }
+
+        return array;
     }
 
     joinMatchHandler = id => {
@@ -32,6 +67,7 @@ class Home extends Component {
     }
 
     render() {
+        console.count('render times')
         return (
             <div>
                 { this.state.matches.map((item, index) => {
