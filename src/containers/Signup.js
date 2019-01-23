@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Input, Form, Button } from '../components/ui/FormControls'
+import { connect } from 'react-redux';
+import { Input, Form, Button } from '../components/ui/FormControls';
+import { Redirect } from 'react-router-dom';
 
 class Signup extends Component {
 
@@ -18,10 +20,14 @@ class Signup extends Component {
 
     submitHandler = event => {
         event.preventDefault();
-        console.log(this.state)
+        this.props.onSignup(this.state);
     }
 
     render () {
+        console.log(this.props.isAuth)
+        if (this.props.isAuth) {
+            return <Redirect to="/" />
+        }
         return (
             <div>
                 <Form onSubmit={ this.submitHandler }>
@@ -32,12 +38,14 @@ class Signup extends Component {
                         id="email"
                         value={ this.state.email } 
                         onChange={ this.inputChangeHandler } 
+                        autoComplete="email"
                     />
                     <Input 
                         placeholder="nombre" 
                         id="name"
                         value={ this.state.name } 
                         onChange={ this.inputChangeHandler } 
+                        autoComplete="username"
                     />
                     <Input 
                         placeholder="contraseña" 
@@ -45,6 +53,7 @@ class Signup extends Component {
                         id="password"
                         value={ this.state.password } 
                         onChange={ this.inputChangeHandler } 
+                        autoComplete="new-password"
                     />
                     <Input 
                         placeholder="Confirmar contraseña" 
@@ -52,6 +61,7 @@ class Signup extends Component {
                         id="confirmPassword"
                         value={ this.state.confirmPassword } 
                         onChange={ this.inputChangeHandler } 
+                        autoComplete="new-password"
                     />
                     <Button>Registrarse</Button>
                 </Form>
@@ -60,4 +70,16 @@ class Signup extends Component {
     }
 }
 
-export default Signup;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.isAuthenticated
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSignup: (data) => dispatch({ type: 'SIGNUP', data: data })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
