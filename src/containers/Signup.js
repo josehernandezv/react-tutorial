@@ -74,7 +74,7 @@ class Signup extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuthenticated
+        isAuth: state.auth.idToken !== null
     }
 }
 

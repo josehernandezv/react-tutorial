@@ -7,38 +7,62 @@ const axiosInstance = axios.create({
 
 const API_KEY = 'AIzaSyDLOMUeyke0v8TFh6p_5M_ngQIaIu_IWSE';
 
-export const signupStart = () => {
+export const authStart = () => {
     return {
-        type: actionTypes.SIGNUP_START,
+        type: actionTypes.AUTH_START,
     }
 }
 
-export const signupFail = (error) => {
+export const logout = () => {
     return {
-        type: actionTypes.SIGNUP_FAIL,
+        type: actionTypes.AUTH_LOGOUT,
+    }
+}
+
+export const authFail = error => {
+    return {
+        type: actionTypes.AUTH_FAIL,
         error
     }
 }
 
-export const signupSuccess = (tokenId, userId) => {
+export const authSuccess = (idToken, localId) => {
     return {
-        type: actionTypes.SIGNUP_SUCCESS,
-        tokenId,
-        userId
+        type: actionTypes.AUTH_SUCCESS,
+        idToken,
+        localId
     }
 }
 
 export const signup = (data) => {
     return (dispatch) => {
-        dispatch(signupStart());
+        dispatch(authStart());
         axiosInstance.post('signupNewUser?key=' + API_KEY, data)
             .then(response => {
                 console.log(response.data);
-                dispatch(signupSuccess(response.data.idToken, response.data.localId))
+                dispatch(authSuccess(response.data.idToken, response.data.localId))
             })
             .catch(err => {
                 console.log(err);
-                dispatch(signupFail(err.response.data.error));
+                dispatch(authFail(err.response.data.error));
+            })
+    }
+}
+
+export const login = (email, password) => {
+    return dispatch => {
+        dispatch(authStart());
+        axiosInstance.post('verifyPassword?key=' + API_KEY, { 
+            email,
+            password,
+            returnSecureToken: true
+        })
+            .then(response => {
+                dispatch(authSuccess(response.data.idToken, response.data.localId))
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(authFail(err.response.data.error));
             })
     }
 }

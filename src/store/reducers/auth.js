@@ -1,18 +1,29 @@
+import * as actionTypes from '../actions/actionTypes';
+
 const initialState = {
-    isAuthenticated: false
+    idToken: null,
+    localId: null,
+    isLoading: false,
+    error: null
+}
+
+const authSuccess = (state, action) => {
+    return {
+        ...state,
+        idToken: action.idToken,
+        localId: action.localId,
+        isLoading: false,
+        error: null
+    }
 }
 
 const reducer = (state = initialState, action) => {
-    console.log(action.type)
     switch(action.type) {
-        case 'SIGNUP': 
-            console.log(action.data)
-            return {
-                ...state,
-                isAuthenticated: true
-            }
-        default: 
-            return state;
+        case actionTypes.AUTH_START: return { ...state, isLoading: true }
+        case actionTypes.AUTH_FAIL: return { ...state, isLoading: false, error: action.error }
+        case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
+        case actionTypes.AUTH_LOGOUT: return { ...state, ...initialState }
+        default: return state;
     }
 }
 
